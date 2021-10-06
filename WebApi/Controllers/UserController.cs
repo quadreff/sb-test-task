@@ -6,5 +6,10 @@ namespace SBTestTask.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return Ok();
+        }
     }
 }

@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "sbtesttask.webapi",
+      "serviceActions": {
+        "sbtesttask.rabbitmq": "StartWithoutDebugging",
+        "sbtesttask.webapi": "StartDebugging"
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/api/user"
+    }
+  }
+}

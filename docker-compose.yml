@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  sbtesttask.rabbitmq:
+    container_name: "test-task-rabbitmq"
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=myuser
+      - RABBITMQ_DEFAULT_PASS=mypassword
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  sbtesttask.webapi:
+    container_name: "test-task-webapi"
+    image: ${DOCKER_REGISTRY-}sbtesttaskwebapi
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+
+  sbtesttask.mongo:
+    container_name: "test-task-mongo"
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=myuser
+      - MONGO_INITDB_ROOT_PASSWORD=mypassword
+    ports:
+      - "27020-27022:27017-27019"
