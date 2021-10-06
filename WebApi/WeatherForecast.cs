@@ -1,6 +1,6 @@
 using System;
 
-namespace SBTestTask
+namespace SBTestTask.WebApi
 {
     public class WeatherForecast
     {
