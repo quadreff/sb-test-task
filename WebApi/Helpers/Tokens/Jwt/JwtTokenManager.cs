@@ -14,6 +14,7 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 
         public JwtSecurityToken GenerateToken(string username)
         {
+            return new JwtSecurityToken();
         }
     }
 }
