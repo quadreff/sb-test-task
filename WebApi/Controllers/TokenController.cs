@@ -27,7 +27,7 @@ namespace SBTestTask.WebApi.Controllers
             {
                 // simple validation is performed in Validate method
                 _validationService.Validate(authInfo);
-                return Ok(_tokenManager.GenerateToken(authInfo.Username));
+                return Ok(_tokenManager.GenerateToken(authInfo.Username).AsString());
             }
             catch (UnauthorizedException)
             {
