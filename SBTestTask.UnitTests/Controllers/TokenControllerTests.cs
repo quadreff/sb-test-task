@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -35,9 +36,26 @@ namespace SBTestTask.UnitTests.Controllers
             var actualResult = _sut.GenerateToken(username, password) as OkObjectResult;
 
             // assert
-
             actualResult.Should().NotBeNull();
             actualResult!.Value.As<JwtSecurityToken>().AsString().Should().BeEquivalentTo(token.AsString());
+        }
+
+        [Fact]
+        public void GenerateToken_WhenTheCredentialsAreNotOk_ShouldReturnUnauthorized()
+        {
+            // arrange
+            var username = "testuser";
+            var password = "testpass";
+            var token = new JwtSecurityToken();
+
+            _tokenManagerMock.Setup(x => x.GenerateToken(username)).Returns(token);
+            _validationServiceMock.Setup(x => x.Validate(username, password)).Throws<UnauthorizedException>();
+
+            // act
+            var actualResult = _sut.GenerateToken(username, password) as UnauthorizedObjectResult;
+
+            // assert
+            actualResult.Should().NotBeNull();
         }
     }
 }
