@@ -6,7 +6,9 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SBTestTask.Common.Infrastructure.RabbitMq;
 using SBTestTask.WebApi.App.Validation;
+using SBTestTask.WebApi.Helpers.RabbitMq;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
 
 namespace SBTestTask.WebApi
@@ -78,6 +80,8 @@ namespace SBTestTask.WebApi
             services.AddScoped<IJwtConfiguration, JwtConfiguration>();
             services.AddScoped<IJwtTokenManager, JwtTokenManager>();
             services.AddScoped<IValidationService, ValidationService>();
+            services.AddScoped<IRabbitMqConfiguration, RabbitMqConfiguration>();
+            services.AddSingleton<IRabbitQueue, RabbitQueue>();
         }
     }
 }

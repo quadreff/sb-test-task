@@ -12,7 +12,7 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
         public const string JwtPath = TokenPath + Separator + "Jwt";
         public const string SecretPath = JwtPath + Separator + "Secret";
         public const string IssuerPath = JwtPath + Separator + "Issuer";
-        public const string AudiencePath = JwtPath + Separator + "AudiencePath";
+        public const string AudiencePath = JwtPath + Separator + "Audience";
         public const string LifeTimePath = JwtPath + Separator + "LifetimeInMinutes";
 
         private readonly TokenSpecs _tokenSpecs;

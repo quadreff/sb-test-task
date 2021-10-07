@@ -18,9 +18,16 @@ namespace SBTestTask.Common.Infrastructure.RabbitMq
         // setup is simplified due to time constraints, no validation, can be a whole factory
         public void Setup(RabbitConnectionInfo connectionInfo, string queueName)
         {
-            _channel?.Dispose();
-            _connection?.Dispose();
-
+            try
+            {
+                _channel?.QueuePurge(Constants.RabbitQueueName);
+                _channel?.Dispose();
+                _connection?.Dispose();
+            }
+            finally
+            {
+            }
+          
             _connection = new ConnectionFactory
             {
                 HostName = connectionInfo.HostName,
@@ -34,7 +41,7 @@ namespace SBTestTask.Common.Infrastructure.RabbitMq
 
             _consumer.Received += (sender, args) => Received?.Invoke(args);
             _queueName = queueName;
-            _channel.QueueDeclare(_queueName);
+            _channel.QueueDeclare(_queueName, exclusive: false, durable: false);
         }
 
         public void Consume()
