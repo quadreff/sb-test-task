@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Models;
@@ -17,7 +19,7 @@ namespace SBTestTask.UnitTests.App.Validation
         }
 
         [Fact]
-        public void Validate_DoNotThrow_IfUsernameAndPasswordIsValid()
+        public void Validate_DoNotThrow_IfUsernameAndPasswordAreValid()
         {
             // arrange
             var username = "test";
@@ -36,6 +38,26 @@ namespace SBTestTask.UnitTests.App.Validation
 
             // assert
             _configurationMock.Verify();
+        }
+
+        [Fact]
+        public void Validate_DoThrow_IfUsernameAndPasswordAreInvalid()
+        {
+            // arrange
+            var username = "test";
+            var password = "test1";
+            var authInfo = new AuthInfo
+            {
+                Username = username,
+                Password = password
+            };
+
+            _configurationMock.Setup(x => x[ValidationService.UsernamePath]).Returns("1").Verifiable();
+            _configurationMock.Setup(x => x[ValidationService.PasswordPath]).Returns("1").Verifiable();
+
+            // act and assert
+            Action action = () => _sut.Validate(authInfo);
+            action.Should().Throw<UnauthorizedException>();
         }
     }
 }
