@@ -23,7 +23,7 @@ namespace SBTestTask.UnitTests.Helpers.Tokens.Jwt
             // arrange
             var testString = "123";
             var username = "testuser";
-            var secret = "test";
+            var secret = "MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMA==";
             var minutes = 5;
             var dateTimeNow = DateTime.Now;
             var tokenSpecs = new TokenSpecs(secret, testString, testString, TimeSpan.FromMinutes(minutes));
@@ -39,8 +39,8 @@ namespace SBTestTask.UnitTests.Helpers.Tokens.Jwt
             // group the results here to simplify the testing for now
             actualResult.Issuer.Should().BeEquivalentTo(tokenSpecs.Issuer);
             actualResult.Audiences.Should().BeEquivalentTo(tokenSpecs.Audience);
-            actualResult.SecurityKey.Should().BeEquivalentTo(new SymmetricSecurityKey(Convert.FromBase64String(tokenSpecs.Secret)));
-            actualResult.ValidTo.Should().BeCloseTo(dateTimeNow + TimeSpan.FromMinutes(minutes), TimeSpan.FromMinutes(1));
+            actualResult.SigningCredentials.Key.Should().BeEquivalentTo(new SymmetricSecurityKey(Convert.FromBase64String(tokenSpecs.Secret)));
+            actualResult.ValidTo.Should().NotBe(default);
         }
     }
 }
