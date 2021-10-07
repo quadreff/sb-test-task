@@ -4,8 +4,8 @@ namespace SBTestTask.Common.Infrastructure.Mongo
 {
     public class MongoDbConfiguration : IMongoDbConfiguration
     {
-        private readonly string _connectionString;
         public const string MongoDbPath = "MongoDb";
+        private readonly string _connectionString;
 
         public MongoDbConfiguration(IConfiguration configuration)
         {

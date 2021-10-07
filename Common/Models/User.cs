@@ -16,12 +16,6 @@ namespace SBTestTask.Common.Models
         public string Name { get; set; } = string.Empty;
 
         [BsonElement]
-        [Required]
-        [DataType(DataType.Password)]
-        [StringLength(16)]
-        public string Password { get; set; } = string.Empty;
-
-        [BsonElement]
         [DataType(DataType.DateTime)]
         public DateTime Created { get; } = DateTime.Now;
     }

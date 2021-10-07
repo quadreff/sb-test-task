@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
+﻿namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 {
     public interface IJwtConfiguration
     {

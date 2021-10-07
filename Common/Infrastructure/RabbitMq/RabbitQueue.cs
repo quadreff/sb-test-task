@@ -8,33 +8,26 @@ namespace SBTestTask.Common.Infrastructure.RabbitMq
 {
     public sealed class RabbitQueue : IRabbitQueue
     {
-        public event Action<BasicDeliverEventArgs>? Received;
-        private IConnection? _connection;
         private IModel? _channel;
+        private IConnection? _connection;
+        private EventingBasicConsumer? _consumer;
 
         private string? _queueName;
-        private EventingBasicConsumer? _consumer;
+        public event Action<BasicDeliverEventArgs>? Received;
 
         // setup is simplified due to time constraints, no validation, can be a whole factory
         public void Setup(RabbitConnectionInfo connectionInfo, string queueName)
         {
-            try
-            {
-                _channel?.QueuePurge(Constants.RabbitQueueName);
-                _channel?.Dispose();
-                _connection?.Dispose();
-            }
-            finally
-            {
-            }
-          
+            _channel?.QueuePurge(Constants.RabbitQueueName);
+            _channel?.Dispose();
+            _connection?.Dispose();
+
             _connection = new ConnectionFactory
             {
                 HostName = connectionInfo.HostName,
                 Port = connectionInfo.Port,
                 UserName = connectionInfo.UserName,
                 Password = connectionInfo.Password
-
             }.CreateConnection();
             _channel = _connection.CreateModel();
             _consumer = new EventingBasicConsumer(_channel);

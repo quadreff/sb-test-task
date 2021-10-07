@@ -1,28 +1,27 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SBTestTask.Common.Models;
 using SBTestTask.WebApi.Common;
+using SBTestTask.WebApi.Models;
 
 namespace SBTestTask.WebApi.App.Validation
 {
     public class ValidationService : IValidationService
     {
-        private readonly IConfiguration _configuration;
-
         public const string Separator = Constants.ConfigurationSeparator;
         public const string CredentialsPath = "TestCredentials";
         public const string UsernamePath = CredentialsPath + Separator + "Username";
         public const string PasswordPath = CredentialsPath + Separator + "Password";
+        private readonly IConfiguration _configuration;
 
         public ValidationService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public void Validate(User user)
+        public void Validate(AuthInfo authInfo)
         {
             var (username, password) = GetCredentialsFromConfig(_configuration);
 
-            if ((username, password) != (user.Name, user.Password))
+            if ((username, password) != (authInfo.Name, authInfo.Password))
             {
                 throw new UnauthorizedException();
             }

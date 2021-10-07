@@ -1,9 +1,9 @@
 ﻿using System;
-using SBTestTask.Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using SBTestTask.Common.Infrastructure.Mongo;
+using SBTestTask.Common.Models;
 
 namespace SBTestTask.Common.Infrastructure
 {
@@ -13,7 +13,8 @@ namespace SBTestTask.Common.Infrastructure
 
         public UserRepository(IMongoDbContext mongoDbContext)
         {
-            _collection = mongoDbContext.GetCollection<User>(Constants.MongoUserCollectionName) ?? throw new ArgumentNullException(nameof(_collection));
+            _collection = mongoDbContext.GetCollection<User>(Constants.MongoUserCollectionName) ??
+                          throw new ArgumentNullException(nameof(_collection));
         }
 
         public async Task AddAsync(User user)

@@ -30,7 +30,7 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
                 Issuer = tokenSpecs.Issuer,
                 Audience = tokenSpecs.Audience
             };
-            
+
             return new JwtSecurityTokenHandler().CreateJwtSecurityToken(tokenDescriptor);
         }
 

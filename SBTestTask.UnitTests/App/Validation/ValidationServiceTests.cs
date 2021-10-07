@@ -26,7 +26,7 @@ namespace SBTestTask.UnitTests.App.Validation
             var password = "test1";
             var authInfo = new AuthInfo
             {
-                Username = username,
+                Name = username,
                 Password = password
             };
 
@@ -48,7 +48,7 @@ namespace SBTestTask.UnitTests.App.Validation
             var password = "test1";
             var authInfo = new AuthInfo
             {
-                Username = username,
+                Name = username,
                 Password = password
             };
 

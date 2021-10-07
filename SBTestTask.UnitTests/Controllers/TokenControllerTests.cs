@@ -29,7 +29,7 @@ namespace SBTestTask.UnitTests.Controllers
             var username = "testuser";
             var authInfo = new AuthInfo
             {
-                Username = username,
+                Name = username,
                 Password = "testpass"
             };
             var token = new JwtSecurityToken();
@@ -52,7 +52,7 @@ namespace SBTestTask.UnitTests.Controllers
             var username = "testuser";
             var authInfo = new AuthInfo
             {
-                Username = username,
+                Name = username,
                 Password = "1234"
             };
             var token = new JwtSecurityToken();

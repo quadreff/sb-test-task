@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using SBTestTask.Common;
 using SBTestTask.Common.Infrastructure;
 using SBTestTask.Common.Infrastructure.RabbitMq;
-using SBTestTask.Common.Models;
 using SBTestTask.WebApi.Helpers.RabbitMq;
 
 namespace SBTestTask.WebApi.Controllers
@@ -19,7 +18,8 @@ namespace SBTestTask.WebApi.Controllers
         private readonly IRabbitQueue _queue;
         private readonly IUserRepository _repository;
 
-        public UserController(IRabbitQueue queue, IRabbitMqConfiguration rabbitMqConfiguration, IUserRepository repository)
+        public UserController(IRabbitQueue queue, IRabbitMqConfiguration rabbitMqConfiguration,
+            IUserRepository repository)
         {
             _queue = queue;
             _repository = repository;
