@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
+using SBTestTask.WebApi.Models;
 
 namespace SBTestTask.WebApi.Controllers
 {
@@ -20,12 +21,13 @@ namespace SBTestTask.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerateToken(string username, string password)
+        public IActionResult GenerateToken([FromBody]AuthInfo authInfo)
         {
             try
             {
-                _validationService.Validate(username, password);
-                return Ok(_tokenManager.GenerateToken(username));
+                // simple validation is performed in Validate method
+                _validationService.Validate(authInfo);
+                return Ok(_tokenManager.GenerateToken(authInfo.Username));
             }
             catch (UnauthorizedException)
             {

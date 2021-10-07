@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SBTestTask.WebApi.Common;
+using SBTestTask.WebApi.Models;
 
 namespace SBTestTask.WebApi.App.Validation
 {
@@ -17,7 +18,7 @@ namespace SBTestTask.WebApi.App.Validation
             _configuration = configuration;
         }
 
-        public void Validate(string username, string password)
+        public void Validate(AuthInfo authInfo)
         {
         }
 

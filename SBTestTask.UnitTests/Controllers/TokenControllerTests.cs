@@ -6,6 +6,7 @@ using Moq;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Controllers;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
+using SBTestTask.WebApi.Models;
 using Xunit;
 
 namespace SBTestTask.UnitTests.Controllers
@@ -26,14 +27,18 @@ namespace SBTestTask.UnitTests.Controllers
         {
             // arrange
             var username = "testuser";
-            var password = "testpass";
+            var authInfo = new AuthInfo
+            {
+                Username = username,
+                Password = "testpass"
+            };
             var token = new JwtSecurityToken();
 
             _tokenManagerMock.Setup(x => x.GenerateToken(username)).Returns(token);
-            _validationServiceMock.Setup(x => x.Validate(username, password));
+            _validationServiceMock.Setup(x => x.Validate(authInfo));
             
             // act
-            var actualResult = _sut.GenerateToken(username, password) as OkObjectResult;
+            var actualResult = _sut.GenerateToken(authInfo) as OkObjectResult;
 
             // assert
             actualResult.Should().NotBeNull();
@@ -45,14 +50,18 @@ namespace SBTestTask.UnitTests.Controllers
         {
             // arrange
             var username = "testuser";
-            var password = "testpass";
+            var authInfo = new AuthInfo
+            {
+                Username = username,
+                Password = "1234"
+            };
             var token = new JwtSecurityToken();
 
             _tokenManagerMock.Setup(x => x.GenerateToken(username)).Returns(token);
-            _validationServiceMock.Setup(x => x.Validate(username, password)).Throws<UnauthorizedException>();
+            _validationServiceMock.Setup(x => x.Validate(authInfo)).Throws<UnauthorizedException>();
 
             // act
-            var actualResult = _sut.GenerateToken(username, password) as UnauthorizedResult;
+            var actualResult = _sut.GenerateToken(authInfo) as UnauthorizedResult;
 
             // assert
             actualResult.Should().NotBeNull();

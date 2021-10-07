@@ -1,7 +1,9 @@
-﻿namespace SBTestTask.WebApi.App.Validation
+﻿using SBTestTask.WebApi.Models;
+
+namespace SBTestTask.WebApi.App.Validation
 {
     public interface IValidationService
     {
-        void Validate(string username, string password);
+        void Validate(AuthInfo authInfo);
     }
 }
