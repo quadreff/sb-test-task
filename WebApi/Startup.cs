@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SBTestTask.Common.Infrastructure;
+using SBTestTask.Common.Infrastructure.Mongo;
 using SBTestTask.Common.Infrastructure.RabbitMq;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Helpers.RabbitMq;
@@ -82,6 +84,9 @@ namespace SBTestTask.WebApi
             services.AddScoped<IValidationService, ValidationService>();
             services.AddScoped<IRabbitMqConfiguration, RabbitMqConfiguration>();
             services.AddSingleton<IRabbitQueue, RabbitQueue>();
+            services.AddScoped<IMongoDbConfiguration, MongoDbConfiguration>();
+            services.AddScoped<IMongoDbContext, MongoDbContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
