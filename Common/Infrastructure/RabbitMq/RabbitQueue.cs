@@ -50,7 +50,7 @@ namespace SBTestTask.Common.Infrastructure.RabbitMq
 
         public void Publish(string routingKey, IEnumerable<byte> body)
         {
-            _channel?.BasicPublish("", routingKey, body: body.ToArray());
+            _channel?.BasicPublish(string.Empty, routingKey, body: body.ToArray());
         }
     }
 }

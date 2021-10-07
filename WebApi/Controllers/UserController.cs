@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SBTestTask.Common;
 using SBTestTask.Common.Infrastructure.RabbitMq;
@@ -28,9 +31,22 @@ namespace SBTestTask.WebApi.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateUser([FromBody]User user)
+        public IActionResult CreateUser(string username)
         {
-            return Ok();
+            try
+            {
+                if (string.IsNullOrEmpty(username))
+                {
+                    return BadRequest();
+                }
+
+                _queue.Publish(Constants.RabbitQueueName, Encoding.UTF8.GetBytes(username));
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
