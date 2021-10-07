@@ -24,6 +24,7 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
             var audience = configuration[AudiencePath];
             var lifeTimeInMinutes = Convert.ToInt32(configuration[LifeTimePath]);
 
+            // made for simplicity, logic can be moved to get the config params on-the-fly.
             _tokenSpecs = new TokenSpecs(secret, issuer, audience,  TimeSpan.FromMinutes(lifeTimeInMinutes));
         }
 
