@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 
 namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 {
@@ -13,14 +14,21 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
         public const string AudiencePath = JwtPath + Separator + "AudiencePath";
         public const string LifeTimePath = JwtPath + Separator + "LifetimeInMinutes";
 
-        private TokenSpecs _tokenSpecs;
+        private readonly TokenSpecs _tokenSpecs;
+
         public JwtConfiguration(IConfiguration configuration)
         {
+            var secret = configuration[SecretPath];
+            var issuer = configuration[IssuerPath];
+            var audience = configuration[AudiencePath];
+            var lifeTimeInMinutes = Convert.ToInt32(configuration[LifeTimePath]);
+
+            _tokenSpecs = new TokenSpecs(secret, issuer, audience,  TimeSpan.FromMinutes(lifeTimeInMinutes));
         }
 
         public TokenSpecs Get()
         {
-            throw new System.NotImplementedException();
+            return _tokenSpecs;
         }
     }
 }
