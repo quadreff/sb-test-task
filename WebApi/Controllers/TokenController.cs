@@ -20,7 +20,8 @@ namespace SBTestTask.WebApi.Controllers
         [HttpPost]
         public IActionResult GenerateToken(string username, string password)
         {
-            return Ok();
+            _validationService.Validate(username, password);
+            return Ok(_tokenManager.GenerateToken(username));
         }
     }
 }

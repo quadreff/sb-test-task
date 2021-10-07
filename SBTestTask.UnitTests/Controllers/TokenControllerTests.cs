@@ -15,9 +15,6 @@ namespace SBTestTask.UnitTests.Controllers
         private readonly Mock<IValidationService> _validationServiceMock = new Mock<IValidationService>();
         private readonly TokenController _sut;
 
-        private const string JwtString
-            = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9l" +
-              "IiwiYWRtaW4iOnRydWUsImlhdCI6MTYzMzU4Mzg1OSwiZXhwIjoxNjMzNTg3NDU5fQ.fmINRc1ngZto5ekFRQRMEDAiFbqARz3C5lVuhUx4UpA";
         public TokenControllerTests()
         {
             _sut = new TokenController(_tokenManagerMock.Object, _validationServiceMock.Object);
@@ -29,7 +26,7 @@ namespace SBTestTask.UnitTests.Controllers
             // arrange
             var username = "testuser";
             var password = "testpass";
-            var token = new JwtSecurityToken(JwtString);
+            var token = new JwtSecurityToken();
 
             _tokenManagerMock.Setup(x => x.GenerateToken(username)).Returns(token);
             _validationServiceMock.Setup(x => x.Validate(username, password));
@@ -40,7 +37,7 @@ namespace SBTestTask.UnitTests.Controllers
             // assert
 
             actualResult.Should().NotBeNull();
-            actualResult!.Value.As<JwtSecurityToken>().AsString().Should().BeEquivalentTo(JwtString);
+            actualResult!.Value.As<JwtSecurityToken>().AsString().Should().BeEquivalentTo(token.AsString());
         }
     }
 }
