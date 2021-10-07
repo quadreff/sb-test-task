@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 {
-    public class JwtTokenManager : ITokenManager<JwtSecurityToken>
+    public class JwtTokenManager : IJwtTokenManager
     {
         private readonly IJwtConfiguration _configuration;
 
@@ -31,7 +30,7 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
                 Issuer = tokenSpecs.Issuer,
                 Audience = tokenSpecs.Audience
             };
-
+            
             return new JwtSecurityTokenHandler().CreateJwtSecurityToken(tokenDescriptor);
         }
 
