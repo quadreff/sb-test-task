@@ -52,7 +52,7 @@ namespace SBTestTask.UnitTests.Controllers
             _validationServiceMock.Setup(x => x.Validate(username, password)).Throws<UnauthorizedException>();
 
             // act
-            var actualResult = _sut.GenerateToken(username, password) as UnauthorizedObjectResult;
+            var actualResult = _sut.GenerateToken(username, password) as UnauthorizedResult;
 
             // assert
             actualResult.Should().NotBeNull();
