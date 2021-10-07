@@ -20,11 +20,17 @@ namespace SBTestTask.WebApi.App.Validation
 
         public void Validate(AuthInfo authInfo)
         {
+            var (username, password) = GetCredentialsFromConfig(_configuration);
+
+            if ((username, password) != (authInfo.Username, authInfo.Password))
+            {
+                throw new UnauthorizedException();
+            }
         }
 
         private static (string Username, string Password) GetCredentialsFromConfig(IConfiguration configuration)
         {
-            return ("test", "test");
+            return (configuration[UsernamePath], configuration[PasswordPath]);
         }
     }
 }

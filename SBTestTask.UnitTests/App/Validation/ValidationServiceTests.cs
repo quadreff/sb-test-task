@@ -17,16 +17,19 @@ namespace SBTestTask.UnitTests.App.Validation
         }
 
         [Fact]
-        public void Validate_DoNotThrow_IfUsernameIsValid()
+        public void Validate_DoNotThrow_IfUsernameAndPasswordIsValid()
         {
             // arrange
+            var username = "test";
+            var password = "test1";
             var authInfo = new AuthInfo
             {
-                Username = "test",
-                Password = "test"
+                Username = username,
+                Password = password
             };
 
-            _configurationMock.Setup(x => x[ValidationService.UsernamePath]).Returns("123").Verifiable();
+            _configurationMock.Setup(x => x[ValidationService.UsernamePath]).Returns(username).Verifiable();
+            _configurationMock.Setup(x => x[ValidationService.PasswordPath]).Returns(password).Verifiable();
             
             // act
             _sut.Validate(authInfo);
