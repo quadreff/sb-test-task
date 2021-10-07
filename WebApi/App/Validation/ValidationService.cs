@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SBTestTask.Common.Models;
 using SBTestTask.WebApi.Common;
-using SBTestTask.WebApi.Models;
 
 namespace SBTestTask.WebApi.App.Validation
 {
@@ -18,11 +18,11 @@ namespace SBTestTask.WebApi.App.Validation
             _configuration = configuration;
         }
 
-        public void Validate(AuthInfo authInfo)
+        public void Validate(User user)
         {
             var (username, password) = GetCredentialsFromConfig(_configuration);
 
-            if ((username, password) != (authInfo.Username, authInfo.Password))
+            if ((username, password) != (user.Name, user.Password))
             {
                 throw new UnauthorizedException();
             }

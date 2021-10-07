@@ -1,9 +1,9 @@
-﻿using SBTestTask.WebApi.Models;
+﻿using SBTestTask.Common.Models;
 
 namespace SBTestTask.WebApi.App.Validation
 {
     public interface IValidationService
     {
-        void Validate(AuthInfo authInfo);
+        void Validate(User authInfo);
     }
 }

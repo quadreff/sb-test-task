@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SBTestTask.WebApi.Models
+namespace SBTestTask.Common.Models
 {
-    public class AuthInfo
+    public class User
     {
         [Required]
         [StringLength(16)]
-        public string Username { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.Password)]
         [StringLength(16)]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
     }
 }

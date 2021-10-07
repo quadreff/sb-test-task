@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SBTestTask.Common.Models;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
-using SBTestTask.WebApi.Models;
 
 namespace SBTestTask.WebApi.Controllers
 {
@@ -21,13 +21,13 @@ namespace SBTestTask.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerateToken([FromBody]AuthInfo authInfo)
+        public IActionResult GenerateToken([FromBody]User user)
         {
             try
             {
                 // simple validation is performed in Validate method
-                _validationService.Validate(authInfo);
-                return Ok(_tokenManager.GenerateToken(authInfo.Username).AsString());
+                _validationService.Validate(user);
+                return Ok(_tokenManager.GenerateToken(user.Name).AsString());
             }
             catch (UnauthorizedException)
             {

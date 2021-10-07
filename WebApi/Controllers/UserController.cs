@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SBTestTask.Common.Models;
 
 namespace SBTestTask.WebApi.Controllers
 {
@@ -8,6 +10,13 @@ namespace SBTestTask.WebApi.Controllers
     {
         [HttpGet]
         public IActionResult Index()
+        {
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult CreateUser([FromBody]User user)
         {
             return Ok();
         }
