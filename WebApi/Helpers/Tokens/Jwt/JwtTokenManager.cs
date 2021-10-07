@@ -5,9 +5,9 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 {
     public class JwtTokenManager : ITokenManager<JwtSecurityToken>
     {
-        private readonly IConfiguration _configuration;
+        private readonly IJwtConfiguration _configuration;
 
-        public JwtTokenManager(IConfiguration configuration)
+        public JwtTokenManager(IJwtConfiguration configuration)
         {
             _configuration = configuration;
         }
