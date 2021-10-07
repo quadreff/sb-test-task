@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
+using SBTestTask.WebApi.Common;
 
 namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 {
     public class JwtConfiguration : IJwtConfiguration
     {
         // leave it public for reference, keep it in constants in case the naming will change
-        public const string Separator = ":";
+        public const string Separator = Constants.ConfigurationSeparator;
         public const string TokenPath = "Token";
         public const string JwtPath = TokenPath + Separator + "Jwt";
         public const string SecretPath = JwtPath + Separator + "Secret";
