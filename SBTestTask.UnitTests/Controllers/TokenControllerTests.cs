@@ -42,7 +42,7 @@ namespace SBTestTask.UnitTests.Controllers
 
             // assert
             actualResult.Should().NotBeNull();
-            actualResult!.Value.As<JwtSecurityToken>().AsString().Should().BeEquivalentTo(token.AsString());
+            actualResult!.Value.Should().BeEquivalentTo(token.AsString());
         }
 
         [Fact]
