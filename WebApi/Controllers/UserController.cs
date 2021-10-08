@@ -30,7 +30,15 @@ namespace SBTestTask.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return Ok(await _repository.GetAllAsync());
+            try
+            {
+                return Ok(await _repository.GetAllAsync());
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [Authorize]

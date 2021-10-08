@@ -17,9 +17,6 @@ services:
     build:
       context: .
       dockerfile: WebApi/Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"
 
   sbtesttask.mongo:
     container_name: "test-task-mongo"
