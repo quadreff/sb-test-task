@@ -9,14 +9,21 @@ using Microsoft.IdentityModel.Tokens;
 using SBTestTask.Common.Infrastructure;
 using SBTestTask.Common.Infrastructure.Mongo;
 using SBTestTask.Common.Infrastructure.RabbitMq;
+using SBTestTask.Common.Logging;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Helpers.RabbitMq;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
+using Serilog;
+using Serilog.Core;
+using Log = SBTestTask.Common.Logging.Log;
 
 namespace SBTestTask.WebApi
 {
     public class Startup
     {
+        private readonly LoggerConfiguration _logConfiguration = new LoggerConfiguration();
+        private Logger? _logger;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +35,7 @@ namespace SBTestTask.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            SetupLogger();
             SetupDi(services);
             SetupJwtAuth(services);
         }
@@ -84,6 +92,33 @@ namespace SBTestTask.WebApi
             services.AddScoped<IMongoDbConfiguration, MongoDbConfiguration>();
             services.AddScoped<IMongoDbContext, MongoDbContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+        }
+
+        private void SetupLogger()
+        {
+            _logger = _logConfiguration
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("webapi.log")
+                .CreateLogger();
+
+            // Depend upon log abstraction
+            Log.Setup((severity, s) =>
+            {
+                switch (severity)
+                {
+                    case LogSeverity.Error:
+                        _logger.Error(s);
+                        break;
+                    case LogSeverity.Info:
+                        _logger.Information(s);
+                        break;
+                    case LogSeverity.Trace:
+                        _logger.Debug(s);
+                        break;
+                    default: throw new ArgumentException("Invalid log level");
+                }
+            });
         }
     }
 }

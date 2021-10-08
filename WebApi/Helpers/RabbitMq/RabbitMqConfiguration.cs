@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 using SBTestTask.Common.Infrastructure.RabbitMq;
+using SBTestTask.Common.Logging;
 using SBTestTask.WebApi.Common;
 
 namespace SBTestTask.WebApi.Helpers.RabbitMq
@@ -21,6 +22,7 @@ namespace SBTestTask.WebApi.Helpers.RabbitMq
             // made for simplicity, logic can be moved to get the config params on-the-fly.
             _connectionInfo = new RabbitConnectionInfo(configuration[UsernamePath],
                 configuration[PasswordPath], configuration[HostPath], Convert.ToInt32(configuration[PortPath]));
+            Log.Trace("Set up rabbit mq configuration");
         }
 
         public RabbitConnectionInfo Get()

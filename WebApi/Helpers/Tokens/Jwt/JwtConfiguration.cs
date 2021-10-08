@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
+using SBTestTask.Common.Logging;
 using SBTestTask.WebApi.Common;
 
 namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
@@ -26,6 +27,8 @@ namespace SBTestTask.WebApi.Helpers.Tokens.Jwt
 
             // made for simplicity, logic can be moved to get the config params on-the-fly.
             _tokenSpecs = new TokenSpecs(secret, issuer, audience, TimeSpan.FromMinutes(lifeTimeInMinutes));
+
+            Log.Trace("Set up jwt configuration");
         }
 
         public TokenSpecs Get()

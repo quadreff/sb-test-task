@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SBTestTask.Common.Logging;
 using SBTestTask.WebApi.App.Validation;
 using SBTestTask.WebApi.Helpers.Tokens.Jwt;
 using SBTestTask.WebApi.Models;
@@ -27,14 +28,18 @@ namespace SBTestTask.WebApi.Controllers
             {
                 // simple validation is performed in Validate method
                 _validationService.Validate(authInfo);
+
+                Log.Trace($"Validation passed, generating token for {authInfo.Name}");
                 return Ok(_tokenManager.GenerateToken(authInfo.Name).AsString());
             }
             catch (UnauthorizedException)
             {
+                Log.Error($"Validation for user failed {authInfo.Name}");
                 return Unauthorized();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Error(e.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
